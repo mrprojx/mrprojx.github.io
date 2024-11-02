@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About TrackIt</title>
+    <style>
+        /* Vanilla Latte Color Scheme */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3e9d2;
+            color: #3b302a;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: flex-start;
+            height: 100vh;
+            overflow: hidden; /* Prevent scroll bars */
+        }
+
+        header {
+            background-color: #d9cbb2;
+            padding: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 28px;
+            font-weight: bold;
+            color: #3b302a;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 80%;
+            max-width: 900px;
+            height: calc(100vh - 60px); /* Adjust for header height */
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            position: relative;
+            overflow-y: auto; /* Allow scrolling for content */
+        }
+
+        h2 {
+            color: #8b7765;
+            margin: 10px 0;
+            font-size: 24px;
+        }
+
+        p, ul, ol {
+            line-height: 1.6;
+            margin: 10px 0;
+        }
+
+        ul, ol {
+            margin-left: 20px;
+        }
+
+        li {
+            margin-bottom: 8px;
+        }
+
+        strong {
+            color: #5a3e31;
+        }
+
+        .about-trackit {
+            width: 100%;
+            background-color: #fef9f3;
+            border: 1px solid #d9cbb2;
+            border-radius: 8px;
+            padding: 20px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+
+        .about-trackit:hover {
+            transform: scale(1.02);
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #8b7765;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-top: 20px;
+        }
+
+        button:hover {
+            background-color: #7a6755;
+        }
+
+        /* Footer */
+        footer {
+            margin-top: auto; /* Pushes footer to the bottom */
+            padding: 10px 20px;
+            background-color: #d9cbb2;
+            text-align: center;
+            color: #3b302a;
+            font-size: 14px;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        @media (max-width: 600px) {
+            h2 {
+                font-size: 22px;
+            }
+
+            header {
+                font-size: 24px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <header>TrackIt</header>
+
+    <div class="container">
+        <div class="about-trackit">
+            <h2>TrackIt - About</h2>
+            <p><strong>TrackIt: Your Global Package Tracker</strong></p>
+            <p>Tired of the endless wait and uncertainty when tracking your international orders from AliExpress, Temu, SHEIN, and other similar online shops? <strong>TrackIt</strong> is here to change that!</p>
+            <p>Our innovative tracking platform is designed to provide you with real-time updates on the status of your packages, right at your fingertips. No more guessing or frustration; just accurate, up-to-date information.</p>
+
+            <h3>Key Features:</h3>
+            <ul>
+                <li><strong>Universal Tracking:</strong> Effortlessly track your orders from a wide range of international online retailers, including AliExpress, Temu, SHEIN, and many more.</li>
+                <li><strong>Real-Time Updates:</strong> Receive instant updates whenever there's a change in your package's status, ensuring you're always in the loop.</li>
+                <li><strong>Intuitive Interface:</strong> Our user-friendly interface makes it easy to add and manage your orders, providing a seamless tracking experience.</li>
+                <li><strong>Detailed Tracking Information:</strong> Gain access to comprehensive details about your package's journey, including shipment origin, destination, and current location.</li>
+                <li><strong>Reliable and Efficient:</strong> Our platform leverages advanced tracking technology to deliver accurate and timely updates, so you can rest assured knowing your package location.</li>
+            </ul>
+
+            <h3>How It Works:</h3>
+            <ol>
+                <li><strong>Add Your Order:</strong> Simply enter your tracking number.</li>
+                <li><strong>Track Your Package:</strong> Our system will automatically fetch the latest updates from the courier service.</li>
+            </ol>
+
+            <h3>Why Choose TrackIt?</h3>
+            <ul>
+                <li><strong>Save Time and Effort:</strong> No more manually checking multiple websites for updates.</li>
+                <li><strong>Peace of Mind:</strong> Know exactly where your package is at all times.</li>
+                <li><strong>Enhanced Shopping Experience:</strong> Make informed decisions and plan accordingly.</li>
+            </ul>
+
+            <p><strong>Join the thousands of satisfied users who trust TrackIt to simplify their online shopping experience. Start tracking your orders today!</strong></p>
+
+            <p><em>DISCLAIMER: We use Cainiao Smart Logistics as our source of shipment updates.</em></p>
+
+            <button onclick="location.href='https://example.com'">Return to TrackIt</button>
+        </div>
+    </div>
+
+    <footer>
+        &copy; 2024 TrackIt. All rights reserved.
+    </footer>
+
+</body>
+</html>
