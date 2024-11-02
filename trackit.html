@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Order Tracker</title>
+    <style>
+        /* Vanilla Latte Color Scheme */
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f3e9d2;
+            color: #3b302a;
+            margin: 0;
+            padding: 0;
+            overflow: hidden; /* Remove scroll bars */
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 100vw;
+            height: 100vh;
+        }
+
+        header {
+            background-color: #d9cbb2;
+            padding: 20px;
+            width: 100%;
+            text-align: center;
+            font-size: 24px;
+            font-weight: bold;
+            color: #3b302a;
+            box-sizing: border-box;
+        }
+
+        .container {
+            width: 100vw;
+            height: calc(100vh - 60px); /* Adjust for header height */
+            padding: 20px;
+            box-sizing: border-box;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #fef9f3;
+            position: relative;
+        }
+
+        h2 {
+            color: #8b7765;
+            margin: 10px 0;
+        }
+
+        label, input[type="text"] {
+            display: block;
+            width: 80%;
+            max-width: 500px;
+            margin-bottom: 15px;
+        }
+
+        input[type="text"] {
+            padding: 10px;
+            border: 1px solid #d9cbb2;
+            border-radius: 4px;
+            background-color: #fff;
+            box-sizing: border-box;
+        }
+
+        button {
+            padding: 10px 20px;
+            background-color: #8b7765;
+            color: #fff;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-bottom: 20px;
+        }
+
+        button:hover {
+            background-color: #7a6755;
+        }
+
+        .iframe-container {
+            width: 100%;
+            height: calc(100vh - 220px); /* Adjust height for the History Corner */
+            overflow: hidden;
+            border-radius: 4px;
+            border: 1px solid #d9cbb2;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+        }
+
+        iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+        }
+
+        /* Loading Spinner */
+        .spinner {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #d9cbb2;
+            border-top: 5px solid #8b7765;
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            position: absolute;
+            z-index: 1;
+            display: none; /* Hidden initially */
+        }
+
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* History Corner */
+        .history-corner {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            width: 250px;
+            max-height: 300px;
+            overflow-y: auto;
+            background-color: #fef9f3;
+            border: 1px solid #d9cbb2;
+            border-radius: 8px;
+            padding: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .history-corner h3 {
+            font-size: 18px;
+            color: #8b7765;
+            margin-top: 0;
+        }
+
+        .history-corner ul {
+            list-style-type: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .history-corner ul li {
+            padding: 5px;
+            font-size: 14px;
+            color: #3b302a;
+            cursor: pointer;
+            border-bottom: 1px solid #d9cbb2;
+        }
+
+        .history-corner ul li:hover {
+            background-color: #f3e9d2;
+        }
+    </style>
+</head>
+<body>
+
+    <header>Order Tracking for Family & Friends</header>
+
+    <div class="container">
+        <h2>Track Your Order</h2>
+        <p>Enter your tracking number below to check the status of your order.</p>
+
+        <label for="trackingNumber">Tracking Number:</label>
+        <input type="text" id="trackingNumber" name="trackingNumber" placeholder="Enter tracking number" maxlength="40" pattern="[A-Za-z0-9]+" title="Tracking codes should only contain letters and numbers.">
+
+        <button onclick="loadTracking()">Track Order</button>
+
+        <div class="iframe-container">
+            <!-- Loading spinner -->
+            <div class="spinner" id="loadingSpinner"></div>
+
+            <!-- Tracking iframe -->
+            <iframe id="trackingIframe" src="about:blank"></iframe>
+        </div>
+
+        <!-- History Corner -->
+        <div class="history-corner" id="historyCorner">
+            <h3>Tracking History</h3>
+            <ul id="historyList"></ul>
+        </div>
+    </div>
+
+    <script>
+        // Load history from cookie
+        function loadHistory() {
+            const historyCookie = document.cookie.split('; ').find(row => row.startsWith('trackingHistory='));
+            const history = historyCookie ? JSON.parse(decodeURIComponent(historyCookie.split('=')[1])) : [];
+            return history;
+        }
+
+        // Save history to cookie
+        function saveHistory(history) {
+            document.cookie = `trackingHistory=${encodeURIComponent(JSON.stringify(history))}; path=/; max-age=${60 * 60 * 24 * 30}`;
+        }
+
+        // Update history display
+        function updateHistoryDisplay() {
+            const historyList = document.getElementById('historyList');
+            historyList.innerHTML = ''; // Clear current list
+            const history = loadHistory();
+            history.forEach(number => {
+                const listItem = document.createElement('li');
+                listItem.textContent = number;
+                listItem.onclick = () => {
+                    document.getElementById("trackingNumber").value = number;
+                    loadTracking();
+                };
+                historyList.appendChild(listItem);
+            });
+        }
+
+        // Load tracking function
+        function loadTracking() {
+            const trackingNumber = document.getElementById("trackingNumber").value;
+            const iframe = document.getElementById("trackingIframe");
+            const spinner = document.getElementById("loadingSpinner");
+
+            if (trackingNumber) {
+                const history = loadHistory();
+                if (!history.includes(trackingNumber)) {
+                    history.push(trackingNumber);
+                    saveHistory(history);
+                }
+
+                // Show the spinner and set iframe source
+                spinner.style.display = "block";
+                const trackingUrl = `https://global.cainiao.com/detail.htm?mailNo=${trackingNumber}`;
+                iframe.src = trackingUrl;
+
+                // Hide the spinner once the iframe loads
+                iframe.onload = function() {
+                    spinner.style.display = "none";
+                };
+
+                updateHistoryDisplay(); // Update the display after tracking number is added
+            } else {
+                alert("Please enter a tracking number.");
+            }
+        }
+
+        // Initialize history on page load
+        window.onload = updateHistoryDisplay;
+    </script>
+
+</body>
+</html>
