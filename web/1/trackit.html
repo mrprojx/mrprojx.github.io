@@ -45,6 +45,25 @@
             position: relative;
         }
 
+        /* About TrackIt Button */
+        .about-button {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            padding: 10px 15px;
+            background-color: #8b7765;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            z-index: 1; /* Ensure it is on top */
+        }
+
+        .about-button:hover {
+            background-color: #7a6755;
+        }
+
         h2 {
             color: #8b7765;
             margin: 10px 0;
@@ -159,6 +178,8 @@
 <body>
 
     <header>Order Tracking for Family & Friends</header>
+
+    <button class="about-button" onclick="location.href='https://example.com'">About TrackIt</button>
 
     <div class="container">
         <h2>Track Your Order</h2>
