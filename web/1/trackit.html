@@ -101,7 +101,7 @@
 
         .iframe-container {
             width: 100%;
-            height: calc(100vh - 260px); /* Adjust height for the History Corner */
+            height: calc(100vh - 140px); /* Adjust height for the remaining elements */
             overflow: hidden;
             border-radius: 4px;
             border: 1px solid #d9cbb2;
@@ -134,46 +134,6 @@
             0% { transform: rotate(0deg); }
             100% { transform: rotate(360deg); }
         }
-
-        /* History Corner */
-        .history-corner {
-            position: fixed; /* Change to fixed */
-            bottom: 80px; /* Position it above the bottom */
-            right: 20px;
-            width: 250px;
-            max-height: 300px;
-            overflow-y: auto;
-            background-color: #fef9f3;
-            border: 1px solid #d9cbb2;
-            border-radius: 8px;
-            padding: 10px;
-            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-        }
-
-        .history-corner h3 {
-            font-size: 18px;
-            color: #8b7765;
-            margin-top: 0;
-        }
-
-        .history-corner ul {
-            list-style-type: none;
-            padding: 0;
-            margin: 0;
-        }
-
-        .history-corner ul li {
-            padding: 5px;
-            font-size: 14px;
-            color: #3b302a;
-            cursor: pointer;
-            border-bottom: 1px solid #d9cbb2;
-        }
-
-        .history-corner ul li:hover {
-            background-color: #f3e9d2;
-        }
-
     </style>
 </head>
 <body>
@@ -198,43 +158,9 @@
             <!-- Tracking iframe -->
             <iframe id="trackingIframe" src="about:blank"></iframe>
         </div>
-
-        <!-- History Corner -->
-        <div class="history-corner" id="historyCorner">
-            <h3>Tracking History</h3>
-            <ul id="historyList"></ul>
-        </div>
     </div>
 
     <script>
-        // Load history from cookie
-        function loadHistory() {
-            const historyCookie = document.cookie.split('; ').find(row => row.startsWith('trackingHistory='));
-            const history = historyCookie ? JSON.parse(decodeURIComponent(historyCookie.split('=')[1])) : [];
-            return history;
-        }
-
-        // Save history to cookie
-        function saveHistory(history) {
-            document.cookie = `trackingHistory=${encodeURIComponent(JSON.stringify(history))}; path=/; max-age=${60 * 60 * 24 * 30}`;
-        }
-
-        // Update history display
-        function updateHistoryDisplay() {
-            const historyList = document.getElementById('historyList');
-            historyList.innerHTML = ''; // Clear current list
-            const history = loadHistory();
-            history.forEach(number => {
-                const listItem = document.createElement('li');
-                listItem.textContent = number;
-                listItem.onclick = () => {
-                    document.getElementById("trackingNumber").value = number;
-                    loadTracking();
-                };
-                historyList.appendChild(listItem);
-            });
-        }
-
         // Load tracking function
         function loadTracking() {
             const trackingNumber = document.getElementById("trackingNumber").value;
@@ -242,12 +168,6 @@
             const spinner = document.getElementById("loadingSpinner");
 
             if (trackingNumber) {
-                const history = loadHistory();
-                if (!history.includes(trackingNumber)) {
-                    history.push(trackingNumber);
-                    saveHistory(history);
-                }
-
                 // Show the spinner and set iframe source
                 spinner.style.display = "block";
                 const trackingUrl = `https://global.cainiao.com/detail.htm?mailNo=${trackingNumber}`;
@@ -257,15 +177,10 @@
                 iframe.onload = function() {
                     spinner.style.display = "none";
                 };
-
-                updateHistoryDisplay(); // Update the display after tracking number is added
             } else {
                 alert("Please enter a tracking number.");
             }
         }
-
-        // Initialize history on page load
-        window.onload = updateHistoryDisplay;
     </script>
 
 </body>
