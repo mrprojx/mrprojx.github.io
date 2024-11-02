@@ -101,7 +101,7 @@
 
         .iframe-container {
             width: 100%;
-            height: calc(100vh - 220px); /* Adjust height for the History Corner */
+            height: calc(100vh - 260px); /* Adjust height for the History Corner */
             overflow: hidden;
             border-radius: 4px;
             border: 1px solid #d9cbb2;
@@ -137,8 +137,8 @@
 
         /* History Corner */
         .history-corner {
-            position: absolute;
-            top: 20px;
+            position: fixed; /* Change to fixed */
+            bottom: 80px; /* Position it above the bottom */
             right: 20px;
             width: 250px;
             max-height: 300px;
@@ -173,6 +173,7 @@
         .history-corner ul li:hover {
             background-color: #f3e9d2;
         }
+
     </style>
 </head>
 <body>
