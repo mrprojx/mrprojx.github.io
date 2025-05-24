@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Flight Tracker</title>
+  <title>SkyTrace</title>
   <link rel="stylesheet" href="style.css" />
   <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
 </head>
 <body>
   <header>
-    <h1>🛫 Flight Tracker</h1>
-    <p>Track flights around the globe in real time</p>
+    <h1>🛫 SkyTrace</h1>
+    <p>Track flights worldwide with SkyTrace</p>
   </header>
 
   <main>
@@ -22,7 +22,7 @@
   </main>
 
   <footer>
-    <p>Made by MRPROJX ✈️</p>
+    <p>Made by MRPROJX for SkyTrace ✈️</p>
   </footer>
 
   <script>
@@ -35,15 +35,15 @@
         return;
       }
 
-      resultBox.innerHTML = "<p>Loading...</p>";
+      resultBox.innerHTML = "<p>Loading SkyTrace data...</p>";
 
-      // Placeholder request - replace with actual backend later
+      // Placeholder request - replace with your real backend endpoint when ready
       try {
         const res = await fetch("https://flight-backend-j49j.onrender.com/api/hello");
         const data = await res.json();
         resultBox.innerHTML = `<p>🛬 ${data.message}</p>`;
       } catch (err) {
-        resultBox.innerHTML = "<p>Error contacting backend.</p>";
+        resultBox.innerHTML = "<p>Error contacting SkyTrace backend.</p>";
       }
     }
   </script>
