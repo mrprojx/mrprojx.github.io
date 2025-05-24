@@ -1,1 +1,51 @@
-for later
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Flight Tracker</title>
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron&display=swap" rel="stylesheet">
+</head>
+<body>
+  <header>
+    <h1>🛫 Flight Tracker</h1>
+    <p>Track flights around the globe in real time</p>
+  </header>
+
+  <main>
+    <section class="tracker-box">
+      <input type="text" placeholder="Enter Flight Number (e.g. EK202)" id="flightInput" />
+      <button onclick="trackFlight()">Track Flight</button>
+      <div id="result"></div>
+    </section>
+  </main>
+
+  <footer>
+    <p>Made by MRPROJX ✈️</p>
+  </footer>
+
+  <script>
+    async function trackFlight() {
+      const flightNumber = document.getElementById("flightInput").value;
+      const resultBox = document.getElementById("result");
+
+      if (!flightNumber.trim()) {
+        resultBox.innerHTML = "<p>Please enter a flight number.</p>";
+        return;
+      }
+
+      resultBox.innerHTML = "<p>Loading...</p>";
+
+      // Placeholder request - replace with actual backend later
+      try {
+        const res = await fetch("https://flight-backend-j49j.onrender.com/api/hello");
+        const data = await res.json();
+        resultBox.innerHTML = `<p>🛬 ${data.message}</p>`;
+      } catch (err) {
+        resultBox.innerHTML = "<p>Error contacting backend.</p>";
+      }
+    }
+  </script>
+</body>
+</html>
