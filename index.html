@@ -14,6 +14,15 @@
       --shadow: rgba(0, 0, 0, 0.4);
     }
 
+    [data-theme="light"] {
+      --bg-gradient: linear-gradient(to bottom right, #fefcea, #f1da36);
+      --card-bg: rgba(0, 0, 0, 0.05);
+      --text-light: #000000;
+      --text-accent: #333;
+      --hover-accent: #e76f51;
+      --shadow: rgba(0, 0, 0, 0.2);
+    }
+
     * {
       margin: 0;
       padding: 0;
@@ -30,6 +39,7 @@
       align-items: center;
       justify-content: center;
       padding: 2rem;
+      transition: background 0.5s ease, color 0.5s ease;
     }
 
     h1 {
@@ -37,6 +47,24 @@
       color: var(--text-accent);
       margin-bottom: 3rem;
       animation: fadeInDown 1.2s ease-out;
+    }
+
+    .theme-toggle {
+      position: absolute;
+      top: 1rem;
+      right: 1rem;
+      background: var(--card-bg);
+      color: var(--text-light);
+      border: none;
+      padding: 0.5rem 1rem;
+      border-radius: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+    }
+
+    .theme-toggle:hover {
+      background: var(--hover-accent);
+      color: white;
     }
 
     .grid {
@@ -90,6 +118,7 @@
   <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
 </head>
 <body>
+  <button class="theme-toggle" onclick="toggleTheme()">Toggle Theme</button>
   <h1>MRPROJX's Creations</h1>
 
   <div class="grid">
@@ -106,5 +135,15 @@
   </div>
 
   <script defer src="https://static.cloudflareinsights.com/beacon.min.js" data-cf-beacon='{"token": "c1b29c1c68ae46bbb653bcb20ac4de6e"}'></script>
+  <script>
+    function toggleTheme() {
+      const html = document.documentElement;
+      if (html.getAttribute('data-theme') === 'light') {
+        html.removeAttribute('data-theme');
+      } else {
+        html.setAttribute('data-theme', 'light');
+      }
+    }
+  </script>
 </body>
 </html>
