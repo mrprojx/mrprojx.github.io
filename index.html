@@ -5,9 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Redirecting...</title>
 
-  <!-- Redirect after 0.9 seconds -->
-  <meta http-equiv="refresh" content="0.9;url=https://www.syscore.uk">
-
   <style>
     * {
       margin: 0;
@@ -18,11 +15,26 @@
     body {
       height: 100vh;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
       background: #050505;
       overflow: hidden;
-      font-family: Arial, sans-serif;
+      font-family: Arial, Helvetica, sans-serif;
+      color: white;
+    }
+
+    .redirect-text {
+      font-size: 1rem;
+      letter-spacing: 3px;
+      margin-bottom: 14px;
+      color: #9d9d9d;
+      text-transform: uppercase;
+    }
+
+    .timer {
+      color: #00ffee;
+      font-weight: bold;
     }
 
     h1 {
@@ -56,12 +68,31 @@
 </head>
 <body>
 
+  <div class="redirect-text">
+    YOU WILL BE REDIRECTED IN
+    <span class="timer" id="countdown">1.255</span>
+  </div>
+
   <h1>Hello!</h1>
 
   <script>
-    setTimeout(() => {
-      window.location.href = "https://www.syscore.uk";
-    }, 900);
+    const redirectTime = 1.255;
+    const countdown = document.getElementById("countdown");
+
+    let remaining = redirectTime;
+    const start = Date.now();
+
+    const interval = setInterval(() => {
+      const elapsed = (Date.now() - start) / 1000;
+      remaining = Math.max(0, redirectTime - elapsed);
+
+      countdown.textContent = remaining.toFixed(3);
+
+      if (remaining <= 0) {
+        clearInterval(interval);
+        window.location.href = "https://www.syscore.uk";
+      }
+    }, 10);
   </script>
 
 </body>
